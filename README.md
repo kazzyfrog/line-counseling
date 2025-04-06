@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![lhandson_design](https://github.com/user-attachments/assets/62fdd1e2-88da-4c10-b6d2-3ead63fe0a22)
 
-## Getting Started
+# 予約システム付きコーポレートサイト
 
-First, run the development server:
+## 概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+このプロジェクトでは、架空のプログラミングスクールを想定して、コーポレートサイトを構築します。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+公式 LINE を「友だち追加」することができ、LINE 上、Web 上の両方で、無料カウンセリングの日時を予約できるシステムを構築します。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 学習目標
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+LINE Messaging API （Bot）を活用した Web アプリケーション開発について学習します。
 
-## Learn More
+Next.js と LINE 公式アカウントを連携させる方法や、LIFF を用いた LINE 内での予約フローの構築についても確認してください。
 
-To learn more about Next.js, take a look at the following resources:
+### 推奨技術
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+このプロジェクトの難易度と趣旨を踏まえて、以下の使用をお勧めします。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- LINE Messaging API によるメッセージング機能
+- LINE Front-end Framework (LIFF)による予約フローの構築
+- Next.js 15 App Router でのフロントエンド・バックエンド開発
+- Vercel へのデプロイ
+- Neon Postgres によるデータベースの活用
+- TypeScript による型チェック
+- Tailwind CSS を用いたスタイリング
+- shadcn/ui によるコンポーネントの導入
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 お題
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 「ユーザーストーリー」を全て満たすアプリを構築してください。
+- 必要に応じて、スクリーンショットやデモサイトの URL を参照してください。
+- スタイルは、あなた自身で独自にカスタマイズすることが可能です。
+
+### 必須機能
+
+- **ランディングページ：**
+  - プログラミングスクールの特徴を紹介する。
+- **公式 LINE 友達追加**：
+  - QR コードまたはボタンから LINE 公式アカウントを友達追加できる。
+- **無料カウンセリング予約**：
+  - Web サイト上と LINE 上の両方から予約フォームにアクセスできる。
+  - LINE 上で、予約の確認・キャンセルをすることができる。
+
+## ユーザーストーリー
+
+- **Web サイト**:
+  - [ ] ユーザーがサイトにアクセスすると、プログラミングスクールの特徴が掲載されている。
+  - [ ] Web サイト上では、名前、メールアドレス、希望日時、相談内容を入力し、無料カウンセリングを予約することができる
+  - [ ] ユーザーが LINE 友達追加ボタンをクリックすると、LINE 公式アカウントを友達追加できる。
+- **LINE：**
+  - [ ] LINE 上でのメニューに「無料カウンセリングを予約」と「予約確認」のボタンが表示されている。
+  - [ ] LINE 上で「**_無料カウンセリングを予約する_**」ボタンをクリックすると、LIFF 画面が開き予約フォームが表示される。
+  - [ ] 予約フォームでは、名前、希望日時、相談内容を入力できる。
+  - [ ] 必要な情報を入力し、「**_予約する_**」ボタンをクリックすると、予約を確定することができる。
+  - [ ] LINE 上で「**_予約確認_**」ボタンをクリックすると、予約内容がメッセージとして届く。
+  - [ ] 予約確認メッセージ内の「**_キャンセルしますか？_**」ボタンをクリックすると、予約をキャンセルする確認メッセージが届く。
+  - [ ] 「**_キャンセルを確定する_**」ボタンをクリックすると、予約をキャンセルすることができる。
+- **その他：**
+  - [ ] 予約の日時は１時間単位で設定され、同じ時間に複数の予約を入れることはできない。
+  - [ ] アプリケーションが公開されており、誰でもアクセス可能である。

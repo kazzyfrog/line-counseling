@@ -7,9 +7,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { closeLiff, getLiffToken, initializeLiff } from "@/lib/liff/utils";
 import { useState, useEffect } from "react";
 
+// LIFFの初期化状態とクライアント内実行状態を管理する型
+type LiffStatus = {
+  initialized: boolean;
+  isInClient: boolean;
+};
+
 export default function LiffReservationPage() {
-  // liffの初期化が成功したかどうか
-  const [isLiffInitialized, setIsLiffInitialized] = useState(false);
+  // LIFFの初期化状態とクライアント内実行状態
+  const [liffStatus, setLiffStatus] = useState<LiffStatus | null>(null);
   // ローディング
   const [isLoading, setIsLoading] = useState(true);
   // 予約フォーム
@@ -19,20 +25,25 @@ export default function LiffReservationPage() {
   // ユーザーへのメッセージ
   const [message, setMessage] = useState("");
 
-  // LIFFの初期化（ライン上からのアクセスかどうか）
+  // LIFFの初期化
   useEffect(() => {
     const initLiff = async () => {
+      setIsLoading(true); // ローディング開始
       const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
 
       if (!liffId) {
         console.error("LIFF ID is not defined");
+        setLiffStatus({ initialized: false, isInClient: false }); // 初期化失敗
         setIsLoading(false);
         return;
       }
 
       const result = await initializeLiff(liffId);
-      setIsLiffInitialized(result.success);
-      setIsLoading(false);
+      setLiffStatus({
+        initialized: result.success,
+        isInClient: result.isInClient,
+      });
+      setIsLoading(false); // ローディング終了
     };
 
     initLiff();
@@ -102,11 +113,16 @@ export default function LiffReservationPage() {
     );
   }
 
-  if (!isLiffInitialized) {
+  // LIFF初期化失敗またはLINEクライアント外からのアクセスの場合
+  if (!liffStatus || !liffStatus.initialized || !liffStatus.isInClient) {
     return (
       <div className="container mx-auto p-4">
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          <p>LIFFの初期化に失敗しました。LINEアプリから開いてください。</p>
+          <p>
+            {liffStatus && !liffStatus.initialized
+              ? "LIFFの初期化に失敗しました。"
+              : "LINEアプリから開いてください。"}
+          </p>
         </div>
       </div>
     );
